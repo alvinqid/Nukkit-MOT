@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
  * @author CreeperFace
  */
 public abstract class BlockPistonBase extends BlockSolidMeta implements Faceable, BlockEntityHolder<BlockEntityPistonArm> {
-
+    private static int MOVE_BLOCK_LIMIT = 12;
     public boolean sticky = false;
 
     public BlockPistonBase() {
@@ -182,6 +182,15 @@ public abstract class BlockPistonBase extends BlockSolidMeta implements Faceable
             }
         }
         return false;
+    }
+
+    public void setMoveBlockLimit(int mbl) {
+        if(mbl < 0) return;
+        MOVE_BLOCK_LIMIT = mbl;
+    }
+
+    public int getMoveBlockLimit() {
+        return MOVE_BLOCK_LIMIT;
     }
 
     private boolean doMove(boolean extending) {
@@ -377,7 +386,7 @@ public abstract class BlockPistonBase extends BlockSolidMeta implements Faceable
                 return true;
             }
 
-            if (this.toMove.size() >= 12) {
+            if (this.toMove.size() >= MOVE_BLOCK_LIMIT) {
                 return false;
             }
 
@@ -398,7 +407,7 @@ public abstract class BlockPistonBase extends BlockSolidMeta implements Faceable
                     break;
                 }
 
-                if (++count + this.toMove.size() > 12) {
+                if (++count + this.toMove.size() > MOVE_BLOCK_LIMIT) {
                     return false;
                 }
 
@@ -444,7 +453,7 @@ public abstract class BlockPistonBase extends BlockSolidMeta implements Faceable
                     return true;
                 }
 
-                if (this.toMove.size() >= 12) {
+                if (this.toMove.size() >= MOVE_BLOCK_LIMIT) {
                     return false;
                 }
 
